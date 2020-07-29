@@ -59,10 +59,16 @@ class App extends React.Component {
     //ya que tenemos la variable descrontruida podemos usarla y pasarla como prop
 
     //las funciones que se embeban en el HTML deben de ir sin parentesis, ya que cuando lo llevan la funcion se ejecuta
+    
+    //Para poder editar los valores del status desde componentes hijos, conviene pasar como prop la funcion que los modifica
+          //de esta forma podemos acceder a la funcion y modificarla
+          //Para pasar parametros, se declara la funcion en el componente padre para recibir parametros, pero solo se mandan desde
+          //el comonente hijo
     return (
         <div className="App">
           <input type="text" value={this.state.name} onChange={this.handleChange} />
           <button type="submit" onClick={this.addItem} > Enviar </button >
+
           <List itemsSent={items} delFunction={this.delItem}/>
         </div>
       );
