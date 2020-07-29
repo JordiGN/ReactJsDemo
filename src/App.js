@@ -28,6 +28,16 @@ class App extends React.Component {
         //de una estructura de datos, ya sea un arreglo o un objeto, los elementos los regresa como elementos, no como 
         //estructura
       }))
+
+  delItem = (idToDel) =>{
+    let newItems = [...this.state.items];
+    newItems.splice(idToDel,1);
+    console.log("idToDel: "+idToDel);
+    this.setState(state =>({
+      items: newItems,
+    }))
+  }
+    
 //Es importante que cuando se quiere modificar el State, se haga unicamente mediante la funcion setState, ya que esta es la 
 //que manda llamar al ciclo de vida y permite que la modificacion haya sido de forma adecuada, de lo contrario, estaremos
 //editanto las variables del estado pero la aplicacion no lo sabra.
@@ -53,7 +63,7 @@ class App extends React.Component {
         <div className="App">
           <input type="text" value={this.state.name} onChange={this.handleChange} />
           <button type="submit" onClick={this.addItem} > Enviar </button >
-          <List itemsSent={items} />
+          <List itemsSent={items} delFunction={this.delItem}/>
         </div>
       );
     }  
