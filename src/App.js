@@ -7,7 +7,8 @@ class App extends React.Component {
 
 //El estado son como las variables que puedes usar globalmente dentro de una misma clase
   state = {
-    name: "",
+    title: "",
+    description: "",
     items: [],
   }
 
@@ -21,13 +22,15 @@ class App extends React.Component {
 //Las arrowfunctions no necesitan tener llaves para encerrar el codigo siempre y cuando solamente retornen un elemento
 //En caso de que tuvieran mas de un elemento entonces si es necesario ponerlo entre llaves para que lo abarque correctamente
 //similar a los ifs
-  addItem = () =>
-    this.setState(state => ({
-        name: "",
-        items: [...state.items, state.name],//El spread operator (...) es un metodo que te permite obtener los elementos
-        //de una estructura de datos, ya sea un arreglo o un objeto, los elementos los regresa como elementos, no como 
-        //estructura
-      }))
+  addItem = () =>{
+      let newObject = {title:this.state.title, description:this.state.description}
+      this.setState(state => ({
+          title: "",
+          description: "",
+          items: [...state.items, newObject],//El spread operator (...) es un metodo que te permite obtener los elementos
+          //de una estructura de datos, ya sea un arreglo o un objeto, los elementos los regresa como elementos, no como 
+          //estructura
+        }))}
 
   delItem = (idToDel) =>{
     let newItems = [...this.state.items];
@@ -41,8 +44,11 @@ class App extends React.Component {
 //Es importante que cuando se quiere modificar el State, se haga unicamente mediante la funcion setState, ya que esta es la 
 //que manda llamar al ciclo de vida y permite que la modificacion haya sido de forma adecuada, de lo contrario, estaremos
 //editanto las variables del estado pero la aplicacion no lo sabra.
-  handleChange = (event) =>
-    this.setState({name : event.target.value});
+  handleChangeTitle = (event) =>
+    this.setState({title : event.target.value});
+
+  handleChangeDescription = (event) =>
+    this.setState({description : event.target.value});
 
   render(){
     //las variables deben de estar dentro de funciones, ya sea funciones de la clase o dentro del metodo render
@@ -66,7 +72,9 @@ class App extends React.Component {
           //el comonente hijo
     return (
         <div className="App">
-          <input type="text" value={this.state.name} onChange={this.handleChange} />
+          <input type="text" placeholder="titulo" value={this.state.title} onChange={this.handleChangeTitle} />
+
+          <input type="text" placeholder="descripcion" value={this.state.description} onChange={this.handleChangeDescription} />
           
           <button type="submit" onClick={this.addItem} > Enviar </button >
 

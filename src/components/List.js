@@ -26,7 +26,7 @@ class List extends React.Component{
 			<div> 
 				<ul>
 					{itemsSent.map((item,index) => 
-						<li key={item.toString()} >{item} {index}
+						<li key={item.toString()} >{item.title} {item.description}
 							<button onClick={ () => this.props.delFunction(index)}>Eliminar</button>
 						</li>
 					)}
