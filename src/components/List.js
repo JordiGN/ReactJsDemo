@@ -3,7 +3,7 @@ import React from 'react';
 class List extends React.Component{
 
 	state = {
-		name: "holis",
+		name: "",
 		itemsSentState: [],
 	}
 
@@ -25,7 +25,6 @@ class List extends React.Component{
 		return (
 			<div> 
 				<ul>
-				
 					{itemsSent.map((item,index) => 
 						<li key={item.toString()} >{item} {index}
 							<button onClick={ () => this.props.delFunction(index)}>Eliminar</button>
