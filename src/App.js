@@ -23,19 +23,33 @@ class App extends React.Component {
 //En caso de que tuvieran mas de un elemento entonces si es necesario ponerlo entre llaves para que lo abarque correctamente
 //similar a los ifs
   addItem = () =>{
-      let newObject = {title:this.state.title, description:this.state.description}
-      this.setState(state => ({
-          title: "",
-          description: "",
-          items: [...state.items, newObject],//El spread operator (...) es un metodo que te permite obtener los elementos
-          //de una estructura de datos, ya sea un arreglo o un objeto, los elementos los regresa como elementos, no como 
-          //estructura
-        }))}
+      if (this.state.title == "" || this.state.description == "" ) {
+        alert("tienes que escribir por lo menos un titulo o una description")
+      }else{
+        let newObject = {title:this.state.title, description:this.state.description}
+        this.setState(state => ({
+            title: "",
+            description: "",
+            items: [...state.items, newObject],//El spread operator (...) es un metodo que te permite obtener los elementos
+            //de una estructura de datos, ya sea un arreglo o un objeto, los elementos los regresa como elementos, no como 
+            //estructura
+          }))
+      }
+    }
 
   delItem = (idToDel) =>{
     let newItems = [...this.state.items];
     newItems.splice(idToDel,1);
     console.log("idToDel: "+idToDel);
+    this.setState({
+      items: newItems,
+    })
+  }
+
+  editItem = (idToEdit, title, description) =>{
+    //alert("si llega?")
+    let newItems = [...this.state.items];
+    newItems[idToEdit]={title:title, description:description}
     this.setState({
       items: newItems,
     })
@@ -78,7 +92,7 @@ class App extends React.Component {
           
           <button type="submit" onClick={this.addItem} > Enviar </button >
 
-          <List itemsSent={items} delFunction={this.delItem}/>
+          <List itemsSent={items} delFunction={this.delItem} editFunction={this.editItem}/>
         </div>
       );
     }  
