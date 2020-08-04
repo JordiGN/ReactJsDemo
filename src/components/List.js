@@ -7,13 +7,15 @@ class List extends React.Component{
 		editName: "",
 		editDescription:"",
 		index:"",
+		editMode:false,
 	}
 
 	setEdit = (title, description,index) => {
 		alert("si en el setEdit "+title+" "+description);
 		this.setState({editName:title,
 			editDescription: description,
-			index:index})
+			index:index,
+			editMode:true})
 	}
 	handleChangeTitle = (event) =>
     this.setState({editName : event.target.value});
@@ -51,8 +53,7 @@ class List extends React.Component{
 					editFunction={this.props.editFunction}
 					changeTitle={this.handleChangeTitle}
 					changeDescription={this.handleChangeDescription}
-
-
+					editMode={this.state.editMode}
 				/>
 			</div>
 		);
