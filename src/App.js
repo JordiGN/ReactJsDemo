@@ -40,7 +40,7 @@ class App extends React.Component {
   delItem = (idToDel) =>{
     let newItems = [...this.state.items];
     newItems.splice(idToDel,1);
-    console.log("idToDel: "+idToDel);
+    //console.log("idToDel: "+idToDel);
     this.setState({
       items: newItems,
     })

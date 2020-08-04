@@ -11,7 +11,7 @@ class List extends React.Component{
 	}
 
 	setEdit = (title, description,index) => {
-		alert("si en el setEdit "+title+" "+description);
+		//alert("si en el setEdit "+title+" "+description);
 		this.setState({editName:title,
 			editDescription: description,
 			index:index,
@@ -23,13 +23,16 @@ class List extends React.Component{
   	handleChangeDescription = (event) =>
     this.setState({editDescription : event.target.value});
 
+    quitEdit = () => {
+    	this.setState({
+    		editMode:false,
+    	})
+    }
+
 	render(){
 		const {itemsSent} = this.props;
-		console.log(itemsSent);
 		let title;
 		let description;
-
-		
 		//siempre que se va a utilizar codigo JS se tiene que encerrar entre llaves para poderse renderear
 		//Los argumentos de una funcion map incluyen, el elemento, el index del elemento, el arreglo completo
 		//por eso al poner ambas propiedades entonces si podemos acceder a ellas y asi usarlas a nuestro beneficio
@@ -54,6 +57,7 @@ class List extends React.Component{
 					changeTitle={this.handleChangeTitle}
 					changeDescription={this.handleChangeDescription}
 					editMode={this.state.editMode}
+					quitEditMode={this.quitEdit}
 				/>
 			</div>
 		);
