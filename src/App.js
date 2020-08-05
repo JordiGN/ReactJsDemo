@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import List from './components/List';
 import Editform from './components/Editform';
+import Donelist from './components/Donelist';
 
 class App extends React.Component {
 
@@ -15,6 +16,7 @@ class App extends React.Component {
     editDescription:"",
     index:"",
     editMode:false,
+    doneItems:[],
   }
 
   componentWillMount(){
@@ -28,7 +30,7 @@ class App extends React.Component {
 //En caso de que tuvieran mas de un elemento entonces si es necesario ponerlo entre llaves para que lo abarque correctamente
 //similar a los ifs
   addItem = () =>{
-      if (this.state.title == "" || this.state.description == "" ) {
+      if (this.state.title == "" && this.state.description == "" ) {
         alert("tienes que escribir por lo menos un titulo o una description")
       }else{
         let newObject = {title:this.state.title, description:this.state.description}
@@ -40,7 +42,7 @@ class App extends React.Component {
             //estructura
           }))
       }
-    }
+  }
 
   delItem = (idToDel) =>{
     let newItems = [...this.state.items];
@@ -70,14 +72,32 @@ class App extends React.Component {
   handleChangeTitleEdit = (event) =>
     this.setState({editName : event.target.value});
 
-    handleChangeDescriptionEdit = (event) =>
-    this.setState({editDescription : event.target.value});
+  handleChangeDescriptionEdit = (event) =>
+  this.setState({editDescription : event.target.value});
 
-    quitEdit = () => {
+  quitEdit = () => {
       this.setState({
         editMode:false,
       })
-    }
+  }
+
+  markDone = (index) =>{
+    let newItems = [...this.state.items];
+    newItems.splice(index,1);
+    this.setState(state =>({
+        doneItems: [...state.doneItems,state.items[index]],
+        items: newItems,
+
+    }));
+  }
+
+  delDoneItem = (index) =>{
+    let newDels = [...this.state.doneItems];
+      newDels.splice(index,1);
+      this.setState({
+        doneItems:newDels,
+      })
+  }
     
 //Es importante que cuando se quiere modificar el State, se haga unicamente mediante la funcion setState, ya que esta es la 
 //que manda llamar al ciclo de vida y permite que la modificacion haya sido de forma adecuada, de lo contrario, estaremos
@@ -111,11 +131,9 @@ class App extends React.Component {
     return (
         <div className="App">
           <input type="text" placeholder="titulo" value={this.state.title} onChange={this.handleChangeTitle} />
-
           <input type="text" placeholder="descripcion" value={this.state.description} onChange={this.handleChangeDescription} />
-          
           <button type="submit" onClick={this.addItem} > Enviar </button >
-          <List itemsSent={items} delFunction={this.delItem} setEdit={this.setEdit}/>
+          <List itemsSent={items} delFunction={this.delItem} setEdit={this.setEdit} doneFunction={this.markDone}/>
 
           <Editform title={this.state.editName} 
           description={this.state.editDescription} 
@@ -124,8 +142,10 @@ class App extends React.Component {
           changeTitle={this.handleChangeTitleEdit}
           changeDescription={this.handleChangeDescriptionEdit}
           editMode={this.state.editMode}
-          quitEditMode={this.quitEdit}
-        />
+          quitEditMode={this.quitEdit}/>
+
+          <Donelist doneItems={this.state.doneItems} delDoneFunction={this.delDoneItem}/>
+
         </div>
       );
     }  

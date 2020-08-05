@@ -21,6 +21,7 @@ class List extends React.Component{
 					{itemsSent.map((item,index) => 
 						<li key={item.title.toString()} >{item.title} {item.description}
 							<button onClick={ () => this.props.setEdit(item.title,item.description,index)} >Editar</button>
+							<button onClick={() => this.props.doneFunction(index)}> Mark Done </button>
 							<button onClick={ () => this.props.delFunction(index)}>Eliminar</button>
 						</li>
 					)}
