@@ -87,7 +87,6 @@ class App extends React.Component {
     this.setState(state =>({
         doneItems: [...state.doneItems,state.items[index]],
         items: newItems,
-
     }));
   }
 
@@ -133,6 +132,7 @@ class App extends React.Component {
           <input type="text" placeholder="titulo" value={this.state.title} onChange={this.handleChangeTitle} />
           <input type="text" placeholder="descripcion" value={this.state.description} onChange={this.handleChangeDescription} />
           <button type="submit" onClick={this.addItem} > Enviar </button >
+          
           <List itemsSent={items} delFunction={this.delItem} setEdit={this.setEdit} doneFunction={this.markDone}/>
 
           <Editform title={this.state.editName} 

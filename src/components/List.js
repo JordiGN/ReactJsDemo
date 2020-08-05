@@ -2,12 +2,9 @@ import React from 'react';
 
 class List extends React.Component{
 
-	state = {
-		
-	}
-
 	render(){
-		const {itemsSent} = this.props;
+		const {itemsSent, setEdit, doneFunction, delFunction} = this.props;
+
 		let title;
 		let description;
 		//siempre que se va a utilizar codigo JS se tiene que encerrar entre llaves para poderse renderear
@@ -20,15 +17,14 @@ class List extends React.Component{
 				<ul>
 					{itemsSent.map((item,index) => 
 						<li key={item.title.toString()} >{item.title} {item.description}
-							<button onClick={ () => this.props.setEdit(item.title,item.description,index)} >Editar</button>
-							<button onClick={() => this.props.doneFunction(index)}> Mark Done </button>
-							<button onClick={ () => this.props.delFunction(index)}>Eliminar</button>
+							<button onClick={ () => setEdit(item.title,item.description,index)} >Editar</button>
+							<button onClick={ () => doneFunction(index)}> Mark Done </button>
+							<button onClick={ () => delFunction(index)}>Eliminar</button>
 						</li>
 					)}
 				</ul>
 			</div>
 		);
 	}
-
 }
 export default List;
