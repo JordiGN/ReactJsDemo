@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import List from './components/List';
+import Editform from './components/Editform';
 
 class App extends React.Component {
 
@@ -10,6 +11,10 @@ class App extends React.Component {
     title: "",
     description: "",
     items: [],
+    editName: "",
+    editDescription:"",
+    index:"",
+    editMode:false,
   }
 
   componentWillMount(){
@@ -54,6 +59,25 @@ class App extends React.Component {
       items: newItems,
     })
   }
+
+  setEdit = (title, description,index) => {
+    //alert("si en el setEdit "+title+" "+description);
+    this.setState({editName:title,
+      editDescription: description,
+      index:index,
+      editMode:true})
+  }
+  handleChangeTitleEdit = (event) =>
+    this.setState({editName : event.target.value});
+
+    handleChangeDescriptionEdit = (event) =>
+    this.setState({editDescription : event.target.value});
+
+    quitEdit = () => {
+      this.setState({
+        editMode:false,
+      })
+    }
     
 //Es importante que cuando se quiere modificar el State, se haga unicamente mediante la funcion setState, ya que esta es la 
 //que manda llamar al ciclo de vida y permite que la modificacion haya sido de forma adecuada, de lo contrario, estaremos
@@ -91,8 +115,17 @@ class App extends React.Component {
           <input type="text" placeholder="descripcion" value={this.state.description} onChange={this.handleChangeDescription} />
           
           <button type="submit" onClick={this.addItem} > Enviar </button >
+          <List itemsSent={items} delFunction={this.delItem} setEdit={this.setEdit}/>
 
-          <List itemsSent={items} delFunction={this.delItem} editFunction={this.editItem}/>
+          <Editform title={this.state.editName} 
+          description={this.state.editDescription} 
+          index={this.state.index}
+          editFunction={this.editItem}
+          changeTitle={this.handleChangeTitleEdit}
+          changeDescription={this.handleChangeDescriptionEdit}
+          editMode={this.state.editMode}
+          quitEditMode={this.quitEdit}
+        />
         </div>
       );
     }  

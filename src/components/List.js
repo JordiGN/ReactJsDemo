@@ -1,33 +1,10 @@
 import React from 'react';
-import Editform from './Editform';
 
 class List extends React.Component{
 
 	state = {
-		editName: "",
-		editDescription:"",
-		index:"",
-		editMode:false,
+		
 	}
-
-	setEdit = (title, description,index) => {
-		//alert("si en el setEdit "+title+" "+description);
-		this.setState({editName:title,
-			editDescription: description,
-			index:index,
-			editMode:true})
-	}
-	handleChangeTitle = (event) =>
-    this.setState({editName : event.target.value});
-
-  	handleChangeDescription = (event) =>
-    this.setState({editDescription : event.target.value});
-
-    quitEdit = () => {
-    	this.setState({
-    		editMode:false,
-    	})
-    }
 
 	render(){
 		const {itemsSent} = this.props;
@@ -43,22 +20,11 @@ class List extends React.Component{
 				<ul>
 					{itemsSent.map((item,index) => 
 						<li key={item.title.toString()} >{item.title} {item.description}
-							<button onClick={ () => this.setEdit(item.title,item.description,index)} >Editar</button>
+							<button onClick={ () => this.props.setEdit(item.title,item.description,index)} >Editar</button>
 							<button onClick={ () => this.props.delFunction(index)}>Eliminar</button>
-
 						</li>
 					)}
 				</ul>
-
-				<Editform title={this.state.editName} 
-					description={this.state.editDescription} 
-					index={this.state.index}
-					editFunction={this.props.editFunction}
-					changeTitle={this.handleChangeTitle}
-					changeDescription={this.handleChangeDescription}
-					editMode={this.state.editMode}
-					quitEditMode={this.quitEdit}
-				/>
 			</div>
 		);
 	}
